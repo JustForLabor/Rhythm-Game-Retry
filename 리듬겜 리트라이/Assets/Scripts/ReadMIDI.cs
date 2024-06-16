@@ -9,10 +9,11 @@ using System.IO;
 public class ReadMIDI : MonoBehaviour
 {
     public string midiFilePath;
-    public NoteData noteData;
+    public static NoteData noteData;
 
     private void Start() {
         midiFilePath = $"Assets/MidiFiles/{midiFilePath}.mid"; // MidiFiles 폴더의 위치로 바로 설정하기
+        noteData = ScriptableObject.CreateInstance<NoteData>();
 
         if (File.Exists(midiFilePath))
         {
@@ -39,24 +40,25 @@ public class ReadMIDI : MonoBehaviour
         {
             var metricTimeSpan = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, tempoMap); // 노트의 시작 시간 가져와서 초 단위로 변환
             double metricTimeSpanInSecond = metricTimeSpan.TotalSeconds;
-            
-            // midi 정보를 바탕으로 note를 생성해서 noteData에 넣기
-            Note noteSet = ScriptableObject.CreateInstance<Note>();
-            noteSet.time = metricTimeSpanInSecond;
-            noteSet.inputKey = SetNoteKey(note);
 
-            noteData.notes.Add(noteSet);
-        }
-    }
+            KeyCode noteKey; // 인게임에서의 노트 입력키
 
-    KeyCode SetNoteKey(Melanchall.DryWetMidi.Interaction.Note note) // 노트 음역에 맞는 키 가져오기
-    {
-        switch(note.NoteName)
+            switch(note.NoteName) // 노트 음역에 맞는 노트 입력키 정하기
             {
                 case NoteName.G:
-                    return KeyCode.A;
+                    noteKey = KeyCode.A;
+                    break;
                 default:
-                    return KeyCode.None;
+                    noteKey = KeyCode.None;
+                    break;
             }
+            
+            // midi 정보를 바탕으로 note 객체 생성
+            Note noteSet = ScriptableObject.CreateInstance<Note>();
+            noteSet.time = metricTimeSpanInSecond;
+            noteSet.inputKey = noteKey;
+            
+            noteData.notes.Add(noteSet); // 생성된 노트 객체를 noteData.notes에 넣기
+        }
     }
 }
