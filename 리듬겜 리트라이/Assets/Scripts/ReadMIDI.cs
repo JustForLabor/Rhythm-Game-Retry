@@ -1,17 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+
+// 미디 관련 라이브러리
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.MusicTheory;
-using System.IO;
 
 public class ReadMIDI : MonoBehaviour
 {
+    public static ReadMIDI instance; // ReadMIDI 싱글턴 인스턴스
+
     public string midiFilePath; // Midi파일 이름
     public PlayerController playerController; // PlayerController 스크립트
     public NoteData noteData; // NoteData 클래스
     public Vector2 notePositionAxis;
+
+    private void Awake() 
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }    
+        else
+        {
+            Destroy(this);
+        }
+    
+    }
 
     private void Start() {
         midiFilePath = $"Assets/MidiFiles/{midiFilePath}.mid"; // MidiFiles 폴더의 위치로 바로 설정하기
@@ -72,11 +89,11 @@ public class ReadMIDI : MonoBehaviour
 
     Vector2 SetNotePosition(double inputTime, KeyCode inputKey) // 노트 위치 결정 메서드 (노트 등장 시간, 입력 키를 매개변수로 받음)
     {
-        Vector2 result;
+        Vector2 result; // 노트의 최종 위치
 
-        result.x = notePositionAxis.x + ((float)inputTime * playerController.moveSpeed);
+        result.x = notePositionAxis.x + ((float)inputTime * playerController.moveSpeed); // 노트 시간과 플레이어 이동속도를 고려하여 x위치 설정
 
-        switch(inputKey)
+        switch(inputKey) // 노트의 입력키를 고려하여 y위치 설정
         {
             case KeyCode.A:
                 result.y = notePositionAxis.y + 1f;

@@ -13,7 +13,7 @@ public class NoteData : ScriptableObject
 public class Note : ScriptableObject
 {
     public enum NoteType { // 노트 종류 모음
-        Note,
+        ShortNote,
         LongNote
     }
     public double inputTime; // 입력 시간
@@ -23,5 +23,5 @@ public class Note : ScriptableObject
 
 public class LongNote : Note
 {
-    NoteType noteType = NoteType.LongNote;
+    //NoteType noteType = NoteType.LongNote;
 }
