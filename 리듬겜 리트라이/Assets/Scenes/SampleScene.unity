@@ -201,7 +201,7 @@ MonoBehaviour:
   midiFilePath: "\u304D\u307F\u3060\u3051\u306E\u3088\u3042\u3051"
   playerController: {fileID: 0}
   noteData: {fileID: 0}
-  notePositionAxis: {x: 0, y: 0}
+  notePositionOffset: {x: -4, y: -0.16}
 --- !u!4 &80137377
 Transform:
   m_ObjectHideFlags: 0
@@ -304,7 +304,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.25, y: 2.77, z: -10}
+  m_LocalPosition: {x: 7.25, y: 2.61, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -501,7 +501,7 @@ Transform:
   m_GameObject: {fileID: 758201935}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -727,8 +727,8 @@ Transform:
   m_GameObject: {fileID: 1248278567}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 82.0466, y: -3.24, z: 0}
-  m_LocalScale: {x: 183.51277, y: 4.1419554, z: 1}
+  m_LocalPosition: {x: 297.1508, y: -3.24, z: 0}
+  m_LocalScale: {x: 613.71893, y: 4.1419554, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -798,7 +798,7 @@ Transform:
   m_GameObject: {fileID: 1579329741}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.25, y: 2.77, z: -10}
+  m_LocalPosition: {x: 7.25, y: 2.61, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

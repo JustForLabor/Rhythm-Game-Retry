@@ -15,7 +15,7 @@ public class ReadMIDI : MonoBehaviour
     public string midiFilePath; // Midi파일 이름
     public PlayerController playerController; // PlayerController 스크립트
     public NoteData noteData; // NoteData 클래스
-    public Vector2 notePositionAxis;
+    public Vector2 notePositionOffset; // 노트 위치 오프셋
 
     private void Awake() 
     {
@@ -59,12 +59,15 @@ public class ReadMIDI : MonoBehaviour
         foreach (var note in noteList)
         {
             double metricTimeSpanInSecond = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, tempoMap).TotalSeconds; // 노트의 시작 시간 가져와서 초 단위로 변환
+
+            Debug.Log(note.NoteName);
             
             // midi 정보를 바탕으로 note 객체 생성 및 정보 입력
             Note noteSet = ScriptableObject.CreateInstance<Note>();
             noteSet.inputTime = metricTimeSpanInSecond;
             noteSet.inputKey = SetNoteKey(note);
-            noteSet.position = SetNotePosition(noteSet.inputTime, noteSet.inputKey);
+            noteSet.position = SetNotePosition(noteSet.inputTime, note);
+            noteSet.noteName = note.NoteName;
             
             noteData.notes.Add(noteSet); // 생성된 노트 객체를 noteData.notes에 넣기
         }
@@ -79,6 +82,11 @@ public class ReadMIDI : MonoBehaviour
             case NoteName.G:
                 result = KeyCode.A;
                 break;
+
+            case NoteName.A:
+                result = KeyCode.D;
+                break;    
+            
             default:
                 result = KeyCode.None;
                 break;
@@ -87,19 +95,22 @@ public class ReadMIDI : MonoBehaviour
         return result;
     }
 
-    Vector2 SetNotePosition(double inputTime, KeyCode inputKey) // 노트 위치 결정 메서드 (노트 등장 시간, 입력 키를 매개변수로 받음)
+    Vector2 SetNotePosition(double inputTime, Melanchall.DryWetMidi.Interaction.Note note) // 노트 위치 결정 메서드 (노트 등장 시간, 입력 키를 매개변수로 받음)
     {
         Vector2 result; // 노트의 최종 위치
 
-        result.x = notePositionAxis.x + ((float)inputTime * playerController.moveSpeed); // 노트 시간과 플레이어 이동속도를 고려하여 x위치 설정
+        result.x = notePositionOffset.x + ((float)inputTime * playerController.moveSpeed); // 노트 시간과 플레이어 이동속도를 고려하여 x위치 설정
 
-        switch(inputKey) // 노트의 입력키를 고려하여 y위치 설정
+        switch(note.NoteName) // 노트의 입력키를 고려하여 y위치 설정
         {
-            case KeyCode.A:
-                result.y = notePositionAxis.y + 1f;
+            case NoteName.G:
+                result.y = notePositionOffset.y + 3f;
+                break;
+            case NoteName.A:
+                result.y = notePositionOffset.y + 0.5f;
                 break;
             default:
-                result.y = notePositionAxis.y;
+                result.y = notePositionOffset.y;
                 break;
         }
 
