@@ -79,11 +79,11 @@ public class ReadMIDI : MonoBehaviour
 
         switch(note.NoteName) // 노트 음역에 맞는 노트 입력키 정하기
         {
-            case NoteName.G:
+            case NoteName.A:
                 result = KeyCode.A;
                 break;
 
-            case NoteName.A:
+            case NoteName.G:
                 result = KeyCode.D;
                 break;    
             
@@ -103,10 +103,10 @@ public class ReadMIDI : MonoBehaviour
 
         switch(note.NoteName) // 노트의 입력키를 고려하여 y위치 설정
         {
-            case NoteName.G:
+            case NoteName.A:
                 result.y = notePositionOffset.y + 3f;
                 break;
-            case NoteName.A:
+            case NoteName.G:
                 result.y = notePositionOffset.y + 0.5f;
                 break;
             default:
