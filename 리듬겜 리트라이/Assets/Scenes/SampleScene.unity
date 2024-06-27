@@ -153,7 +153,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notePrefab: {fileID: 8254373153721317149, guid: 911b4f5856e248f4882132674cbe36e0, type: 3}
+  notePool: []
   noteFolder: {fileID: 1909712708}
+  prepositionTIme: 5
 --- !u!4 &27235516
 Transform:
   m_ObjectHideFlags: 0
@@ -161,6 +163,53 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27235514}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &63289941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 63289943}
+  - component: {fileID: 63289942}
+  m_Layer: 0
+  m_Name: MusicManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &63289942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63289941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb73c680bcfb9e459e9695f48630363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 758201941}
+  audioDelayTime: 0.1
+  audioDeltaTime: 0
+--- !u!4 &63289943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63289941}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -180,7 +229,7 @@ GameObject:
   - component: {fileID: 80137377}
   - component: {fileID: 80137376}
   m_Layer: 0
-  m_Name: ReadMidi
+  m_Name: ReadMIDI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,10 +247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03556c0ddd4b4a043a80aefa2a6d3b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  midiFilePath: "\u304D\u307F\u3060\u3051\u306E\u3088\u3042\u3051\uC644\uC131"
-  playerController: {fileID: 0}
+  midiFilePath: "\u304D\u307F\u3060\u3051\u306E\u3088\u3042\u3051\uCD5C\uC885\uBCF8"
   noteData: {fileID: 0}
-  notePositionOffset: {x: -4, y: -0.16}
+  notePositionOffset: {x: 0, y: -0.16}
 --- !u!4 &80137377
 Transform:
   m_ObjectHideFlags: 0
@@ -212,6 +260,54 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &468812925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 468812927}
+  - component: {fileID: 468812926}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &468812926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468812925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8502c06733e580f4cb59cf77adde43f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  readMIDI: {fileID: 80137376}
+  playerController: {fileID: 758201936}
+  noteInstantiate: {fileID: 27235515}
+  musicManager: {fileID: 63289942}
+--- !u!4 &468812927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468812925}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 90.46171, y: -7.394489, z: 11.696252}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -908,9 +1004,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 1579329743}
+  - {fileID: 468812927}
   - {fileID: 80137377}
+  - {fileID: 63289943}
+  - {fileID: 27235516}
   - {fileID: 1248278570}
   - {fileID: 758201940}
-  - {fileID: 1579329743}
-  - {fileID: 27235516}
   - {fileID: 1909712708}

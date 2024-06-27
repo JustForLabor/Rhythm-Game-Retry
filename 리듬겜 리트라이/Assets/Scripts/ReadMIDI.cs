@@ -10,30 +10,16 @@ using Melanchall.DryWetMidi.MusicTheory;
 
 public class ReadMIDI : MonoBehaviour
 {
-    public static ReadMIDI instance; // ReadMIDI 싱글턴 인스턴스
-
     public string midiFilePath; // Midi파일 이름
-    public PlayerController playerController; // PlayerController 스크립트
     public NoteData noteData; // NoteData 클래스
+    public static List<double> timeStamps; // 노트 타임스템프
+
     public Vector2 notePositionOffset; // 노트 위치 오프셋
 
-    private void Awake() 
+    private void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }    
-        else
-        {
-            Destroy(this);
-        }
-    
-    }
-
-    private void Start() {
         midiFilePath = $"Assets/MidiFiles/{midiFilePath}.mid"; // MidiFiles 폴더의 위치로 바로 설정하기
         noteData = ScriptableObject.CreateInstance<NoteData>(); // NoteData 객체 생성
-        playerController = FindObjectOfType<PlayerController>(); // PlayerController 스크립트 할당
 
         if (File.Exists(midiFilePath)) // Midi 파일이 경로에 존재하면
         {
@@ -48,7 +34,7 @@ public class ReadMIDI : MonoBehaviour
         }
     }
 
-    void ExtractFromMidi(byte[] midiBytes, NoteData noteData) // Midi 데이터 추출 메서드
+    private void ExtractFromMidi(byte[] midiBytes, NoteData noteData) // Midi 데이터 추출 메서드
     {
         MidiFile midiFile = MidiFile.Read(new MemoryStream(midiBytes)); // 미디 파일
         var noteList = midiFile.GetNotes(); // 미디 파일의 노트 리스트
@@ -60,7 +46,7 @@ public class ReadMIDI : MonoBehaviour
         {
             double metricTimeSpanInSecond = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, tempoMap).TotalSeconds; // 노트의 시작 시간 가져와서 초 단위로 변환
 
-            Debug.Log(note.NoteName);
+            //Debug.Log(note.NoteName); // 노트 이름 확인용
             
             // midi 정보를 바탕으로 note 객체 생성 및 정보 입력
             Note noteSet = ScriptableObject.CreateInstance<Note>();
@@ -71,9 +57,18 @@ public class ReadMIDI : MonoBehaviour
             
             noteData.notes.Add(noteSet); // 생성된 노트 객체를 noteData.notes에 넣기
         }
+
+        timeStamps = GetTimeStamps();// timeStamps 설정
+
+        /*/ 타임스템프 값 확인용
+        foreach (double timeStamp in timeStamps)
+        {
+            Debug.Log(timeStamp);
+        }
+        /*/
     }
 
-    KeyCode SetNoteKey(Melanchall.DryWetMidi.Interaction.Note note) // 노트 입력키를 결정하는 메서드 (노트를 매개변수로 받음)
+    private KeyCode SetNoteKey(Melanchall.DryWetMidi.Interaction.Note note) // 노트 입력키를 결정하는 메서드 (노트를 매개변수로 받음)
     {
         KeyCode result; // 인게임에서의 노트 입력키
 
@@ -95,11 +90,14 @@ public class ReadMIDI : MonoBehaviour
         return result;
     }
 
-    Vector2 SetNotePosition(double inputTime, Melanchall.DryWetMidi.Interaction.Note note) // 노트 위치 결정 메서드 (노트 등장 시간, 입력 키를 매개변수로 받음)
+    private Vector2 SetNotePosition(double inputTime, Melanchall.DryWetMidi.Interaction.Note note) // 노트 위치 결정 메서드 (노트 등장 시간, 입력 키를 매개변수로 받음)
     {
         Vector2 result; // 노트의 최종 위치
 
-        result.x = notePositionOffset.x + ((float)inputTime * playerController.moveSpeed); // 노트 시간과 플레이어 이동속도를 고려하여 x위치 설정
+        result.x = 
+        notePositionOffset.x +
+        ((float)inputTime * GameManager.instance.playerController.moveSpeed) +
+        (GameManager.instance.musicManager.audioDelayTime * GameManager.instance.playerController.moveSpeed); // 노트 시간과 플레이어 이동속도, 첫 음악 재생 지연 시간을 고려하여 x위치 설정
 
         switch(note.NoteName) // 노트의 입력키를 고려하여 y위치 설정
         {
@@ -115,5 +113,17 @@ public class ReadMIDI : MonoBehaviour
         }
 
         return result;
+    }
+
+    private List<double> GetTimeStamps() // noteData 에서 타임스템프 관련 부분만 추출하는 메서드
+    {
+        List<double> timeStamps = new List<double>();
+
+        foreach (Note note in noteData.notes)
+        {
+            timeStamps.Add(note.inputTime);
+        }
+
+        return timeStamps;
     }
 }
