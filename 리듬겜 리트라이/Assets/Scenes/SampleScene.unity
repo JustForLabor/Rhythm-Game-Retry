@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03556c0ddd4b4a043a80aefa2a6d3b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  midiFilePath: "\u304D\u307F\u3060\u3051\u306E\u3088\u3042\u3051\uCD5C\uC885\uBCF8"
+  midiFilePath: "\u304D\u307F\u3060\u3051\u306E\u3088\u3042\u3051"
   noteData: {fileID: 0}
   notePositionOffset: {x: 0, y: -0.16}
 --- !u!4 &80137377
