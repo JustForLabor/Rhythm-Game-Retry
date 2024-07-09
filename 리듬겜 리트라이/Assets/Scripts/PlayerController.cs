@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
     private new Rigidbody2D rigidbody2D;
+    private float audioDeltaTime; // 오디오 기준 델타타임
+    private float accumulatedAudioDeltaTime; // 누적된 오디오 델타타임
 
     private void Awake() {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -13,11 +16,12 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //rigidbody2D.MovePosition(rigidbody2D.position + Vector2.right * moveSpeed * Time.deltaTime);
-        rigidbody2D.velocity = Vector2.right * moveSpeed;
+        audioDeltaTime = GameManager.instance.musicManager.audioDeltaTime; // 오디오 기준 델타타임 업데이트
+        accumulatedAudioDeltaTime += audioDeltaTime; // 오디오 기준 델타타임 누적
+        if (accumulatedAudioDeltaTime > Time.fixedDeltaTime) // fixedDeltaTime보다 누적된 오디오 델타타임 값이 크면
+        {
+            transform.Translate(Vector2.right * moveSpeed * Time.fixedDeltaTime); // fixedDeltaTime에 맞추어 플레이어 이동
+            accumulatedAudioDeltaTime -= Time.fixedDeltaTime; // 누적된 오디오 기준 델타타임에서 fixedDeltaTime값 차감
+        }
     }
 }
-
-
-// 플레이어 움직임과 노트 싱크가 안 맞는 이유 > 오디오 상에서 흐른 시간과 DeltaTime값에 괴리가 발생하기 때문이다.
-// 이를 해결하기 위해서는 오디오를 기준으로 한 새로운 DeltaTime을 정의할 필요성이 있다.

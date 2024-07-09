@@ -27,7 +27,7 @@ public class NoteInstantiate : MonoBehaviour
     {
         if (ReadMIDI.timeStamps.Count >= noteIndex) // 타임스템프 개수가 noteIndex보다 클 때 (타임스템프 개수 이상으로 노트를 생성하는 오류 방지) ************* 타임스템프 개수에 뭔가 문제가 있는거 같으니까 나중에 Debug.Log로 Count값 살펴보자
         {
-            if (GameManager.instance.musicManager.GetAudioSourceTime() >= ReadMIDI.timeStamps[noteIndex] - prepositionTIme) // 현재 오디오 재생 시간이 해당 순서 노트의 (타임스템프 - 미리 등장할 시간)일 때
+            if (GameManager.instance.musicManager.audioSource.time >= ReadMIDI.timeStamps[noteIndex] - prepositionTIme) // 현재 오디오 재생 시간이 해당 순서 노트의 (타임스템프 - 미리 등장할 시간)일 때
             {
                 GameObject newNote = getNoteObject(); // 오브젝트 풀에서 노트 가져오기
                 newNote.transform.position = GameManager.instance.readMIDI.noteData.notes[noteIndex].position; // 노트 위치 설정
