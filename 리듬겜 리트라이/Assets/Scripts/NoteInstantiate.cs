@@ -8,9 +8,8 @@ public class NoteInstantiate : MonoBehaviour
 {
     public GameObject notePrefab; // 노트 Prefab
     public List<GameObject> notePool; // 노트 오브젝트 풀
-    public Transform noteFolder; // 노트 담아놓을 폴더
 
-    public float prepositionTIme; // 사전에 노트를 미리 생성할 시간
+    public float prepositionTime; // 사전에 노트를 미리 생성할 시간
     private int noteIndex = 0; // 노트 순서 인덱스
 
     private void Awake()
@@ -27,7 +26,7 @@ public class NoteInstantiate : MonoBehaviour
     {
         if (ReadMIDI.timeStamps.Count >= noteIndex) // 타임스템프 개수가 noteIndex보다 클 때 (타임스템프 개수 이상으로 노트를 생성하는 오류 방지) ************* 타임스템프 개수에 뭔가 문제가 있는거 같으니까 나중에 Debug.Log로 Count값 살펴보자
         {
-            if (GameManager.instance.musicManager.GetAudioSourceTime() >= ReadMIDI.timeStamps[noteIndex] - prepositionTIme) // 현재 오디오 재생 시간이 해당 순서 노트의 (타임스템프 - 미리 등장할 시간)일 때
+            if (GameManager.instance.musicManager.audioSource.time >= ReadMIDI.timeStamps[noteIndex] - prepositionTime) // 현재 오디오 재생 시간이 해당 순서 노트의 (타임스템프 - 미리 등장할 시간)일 때
             {
                 GameObject newNote = getNoteObject(); // 오브젝트 풀에서 노트 가져오기
                 newNote.transform.position = GameManager.instance.readMIDI.noteData.notes[noteIndex].position; // 노트 위치 설정
@@ -53,7 +52,7 @@ public class NoteInstantiate : MonoBehaviour
 
         if (result == null) // 오브젝트 풀의 모든 오브젝트가 사용 중이라서 가져올 게 없을 때
         {
-            result = Instantiate(notePrefab, noteFolder); // 반환값에 오브젝트를 새로 만들어서 할당하기
+            result = Instantiate(notePrefab); // 반환값에 오브젝트를 새로 만들어서 할당하기
             notePool.Add(result); // 노트를 오브젝트 풀에 넣어서 오브젝트 풀의 오브젝트 개수 확장
         }
 

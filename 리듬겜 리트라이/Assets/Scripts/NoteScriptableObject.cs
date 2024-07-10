@@ -14,10 +14,6 @@ public class NoteData : ScriptableObject
 [CreateAssetMenu(fileName = "Note", menuName = "ScriptableObjects/Note", order = 2)]
 public class Note : ScriptableObject
 {
-    public enum NoteType { // 노트 종류 모음
-        ShortNote,
-        LongNote
-    }
     public double inputTime; // 입력 시간
     public KeyCode inputKey; // 입력 키
     public Vector2 position; // 노트 위치
