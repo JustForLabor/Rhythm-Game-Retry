@@ -18,6 +18,8 @@ public class Note : ScriptableObject
     public KeyCode inputKey; // 입력 키
     public Vector2 position; // 노트 위치
     public NoteName noteName; // 노트 음 이름
+    public GameObject noteObject; // 노트에 대응하는 오브젝트
+    public bool isDeactived; // 노트 오브젝트가 비활성화 되었는지 여부를 확인
 }
 
 public class LongNote : Note

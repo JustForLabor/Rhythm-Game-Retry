@@ -24,16 +24,18 @@ public class NoteInstantiate : MonoBehaviour
 
     public void ArrangeNotes() // 노트 어레인지 메서드 (ReadMIDI의 noteData 변수값을 바탕으로 노트 생성)
     {
-        if (ReadMIDI.timeStamps.Count >= noteIndex) // 타임스템프 개수가 noteIndex보다 클 때 (타임스템프 개수 이상으로 노트를 생성하는 오류 방지) ************* 타임스템프 개수에 뭔가 문제가 있는거 같으니까 나중에 Debug.Log로 Count값 살펴보자
+        if (ReadMIDI.timeStamps.Count <= noteIndex) // 타임스템프 개수가 noteIndex보다 클 때 (타임스템프 개수 이상으로 노트를 생성하는 오류 방지) ************* 타임스템프 개수에 뭔가 문제가 있는거 같으니까 나중에 Debug.Log로 Count값 살펴보자
+        {return;}
+
+        if (GameManager.instance.musicManager.audioSource.time >= ReadMIDI.timeStamps[noteIndex] - prepositionTime) // 현재 오디오 재생 시간이 해당 순서 노트의 (타임스템프 - 미리 등장할 시간)일 때
         {
-            if (GameManager.instance.musicManager.audioSource.time >= ReadMIDI.timeStamps[noteIndex] - prepositionTime) // 현재 오디오 재생 시간이 해당 순서 노트의 (타임스템프 - 미리 등장할 시간)일 때
-            {
-                GameObject newNote = getNoteObject(); // 오브젝트 풀에서 노트 가져오기
-                newNote.transform.position = GameManager.instance.readMIDI.noteData.notes[noteIndex].position; // 노트 위치 설정
-                newNote.SetActive(true); // 노트 활성화
-                
-                noteIndex++;
-            }
+            GameObject newNote = getNoteObject(); // 오브젝트 풀에서 노트 가져오기
+            newNote.transform.position = GameManager.instance.readMIDI.noteData.notes[noteIndex].position; // 노트 위치 설정
+            GameManager.instance.readMIDI.noteData.notes[noteIndex].noteObject = newNote; // 노트에 노트 오브젝트 대응시키기
+
+            newNote.SetActive(true); // 노트 활성화
+            
+            noteIndex++;
         }
     }
 
