@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour
     private float audioTime; // 현재 오디오 재생 시간
     [SerializeField] private int index_A = 0; // A키에 대응하는 노트 인덱스
     [SerializeField] private int index_D = 0; // D키에 대응하는 노트 인덱스
+
+    //======================================== UI 관련 변수 ============================================
+    [SerializeField] private HitFeedbackUI hitFeedbackUI;
+
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -74,18 +78,21 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Perfect!");
             hitProcess(targetNoteList, ref index);
+            hitFeedbackUI.changeText("Perfect!");
         }
 
         else if (Mathf.Abs((float)targetNoteList[index].inputTime - audioTime) <= timeRange["Great"])
         {
             Debug.Log("Great!");
             hitProcess(targetNoteList, ref index);
+            hitFeedbackUI.changeText("Great!");
         }
 
         else if (Mathf.Abs((float)targetNoteList[index].inputTime - audioTime) <= timeRange["Bad"])
         {
             Debug.Log("Bad...");
             hitProcess(targetNoteList, ref index);
+            hitFeedbackUI.changeText("Bad...");
         } 
     }
 
