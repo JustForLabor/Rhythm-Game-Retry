@@ -21,6 +21,7 @@ public class ReadMIDI : MonoBehaviour
     public NoteData noteData; // NoteData 클래스
     public static List<double> timeStamps; // 노트 타임스템프
     public static List<List<Note>> notesFromInputKey; // 입력키에 대해 분류한 노트 정보 (노트 히트 판정에 사용)
+    // 입력키 별로 리스트를 분류하니까 실수로 다른 키를 입력하면 그대로 다른 노트가 인식되어 사라짐. 그냥 리스트 하나로 통일하자.
 
     private void Start()
     {
