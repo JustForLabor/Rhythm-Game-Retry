@@ -134,14 +134,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator NoteDisappearant(List<Note> targetList, int index, float decativeTime) // 노트 비활성화 코루틴
+    private IEnumerator NoteDisappearant(List<Note> targetList, int index, float deactiveTime) // 노트 비활성화 코루틴
     {
+
+        // 여기에서 미리 해당 인덱스를 저장하지 않고 아래에서 Deactive해서 순서가 꼬인건가?
         GameObject noteObject = targetList[index].noteObject;
 
         if (targetList[index].isDeactived == true) // 이미 노트가 비활성화 되었으면 하던거 취소
         {yield break;}
 
-        yield return new WaitForSeconds(decativeTime);
+        yield return new WaitForSeconds(deactiveTime);
         noteObject.SetActive(false);
         targetList[index].isDeactived = true;
         index++;
