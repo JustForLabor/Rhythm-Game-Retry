@@ -8,6 +8,9 @@ using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.MusicTheory;
 
+// 미디 데이터를 저장하는 네임스페이스
+using RhythmGame.Midi;
+
 public class ReadMIDI : MonoBehaviour
 {
     //======================================== 기본 설정 변수 ============================================

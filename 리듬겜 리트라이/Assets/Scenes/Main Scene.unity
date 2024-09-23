@@ -226,6 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 80137377}
+  - component: {fileID: 80137378}
   - component: {fileID: 80137376}
   m_Layer: 0
   m_Name: ReadMIDI
@@ -265,6 +266,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &80137378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80137375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1a5c1d2278be9408070d6885c8fbd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NoteData: {fileID: 0}
+  midiFilePath: "\u304D\u307F\u3060\u3051\u306E\u3088\u3042\u3051"
+  notePositionOffset: {x: 2, y: -0.16}
+  inputKeys: 6100000064000000
 --- !u!1 &468812925
 GameObject:
   m_ObjectHideFlags: 0
